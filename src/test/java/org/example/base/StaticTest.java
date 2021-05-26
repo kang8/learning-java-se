@@ -6,19 +6,27 @@ class StaticTest {
 
     @Test
     void runStaticMethod() {
-        Static.something();
-        System.out.println(Static.init);
+        Static.staticMethod();
+        System.out.println(Static.staticVariable);
+        System.out.println("+++++++++++++++++++++");
+        Static.staticMethodOther();
+        Static.staticMethod();
     }
 
     @Test
     void runStaticVariable() {
-        System.out.println(Static.init);
+        System.out.println(Static.staticVariable);
     }
 
     @Test
     void newObject() {
         new Static();
-        System.out.println("+++++ run other constructor  ++++++");
+    }
+
+    @Test
+    void newObjectTwice() {
+        new Static();
+        System.out.println("++++++++++ Create Object Down ++++++++");
         new Static();
     }
 

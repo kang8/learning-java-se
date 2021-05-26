@@ -9,32 +9,34 @@ public class Static {
         new Show("code block other");
     }
 
-    public static void something() {
+    public static void staticMethod() {
         new Show("static method");
-        init = "resume assignment value in static method";
+        staticVariable = "resume assignment value in static method";
     }
 
-    public static void somethingOther() {
-        new Show("static method for other");
+    public static void staticMethodOther() {
+        new Show("static method other");
     }
 
     static {
         new Show("static code block");
     }
 
-    public static String init = Show.create("static variable");
+    public static String staticVariable = Show.create("static variable");
 
-    public static String initOther = Show.create("static variable for other");
+    public static String staticVariableOther = Show.create("static variable other");
 
-    public static final String initFinal = Show.create("static final variable");
+    public static final String staticFinalVariable = Show.create("static final variable");
+
+    public String nonStaticVariable = Show.create("non static variable");
+
+    public String nonStaticVariableOther = Show.create("non static variable other");
 
     static {
-        new Show("static code block for other");
+        new Show("static code block other");
 
-        init = "resume assignment value in static block";
+        staticVariable = "resume assignment value in static block";
     }
-
-    public static int defaultInt;
 
     public Static() {
         System.out.println("constructor method");
