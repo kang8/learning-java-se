@@ -6,10 +6,14 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -20,12 +24,28 @@ public class Xml {
         Xml xml = new Xml();
         try {
             Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xml.resource.getFile());
+            // delete standalone attribute
+            doc.setXmlStandalone(true);
 
             XPath xPath = XPathFactory.newInstance().newXPath();
             try {
                 Node versionNode = (Node) xPath.compile("/project/version").evaluate(doc, XPathConstants.NODE);
-                String version = versionNode.getTextContent();
-                System.out.println(version);
+                versionNode.setTextContent(versionNode.getTextContent() + "-SNAPSHOT");
+
+                Transformer tf = null;
+                try {
+                    tf = TransformerFactory.newInstance().newTransformer();
+                } catch (TransformerConfigurationException e) {
+                    e.printStackTrace();
+                }
+
+                DOMSource domSource = new DOMSource(doc);
+                StreamResult sr = new StreamResult(new File("Data.xml"));
+                try {
+                    tf.transform(domSource, sr);
+                } catch (TransformerException e) {
+                    e.printStackTrace();
+                }
             } catch (XPathExpressionException e) {
                 e.printStackTrace();
             }
